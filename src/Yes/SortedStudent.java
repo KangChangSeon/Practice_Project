@@ -1,5 +1,7 @@
 package Yes;
 
+import java.util.List;
+
 public interface SortedStudent {
-    public String[] SortStuData();
+    public List<Student> SortStuData(int sort);
 }

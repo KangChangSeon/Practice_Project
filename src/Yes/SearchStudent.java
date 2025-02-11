@@ -1,5 +1,7 @@
 package Yes;
 
+import java.util.List;
+
 public interface SearchStudent extends StudentOutput{
-    public String[] SearchStuData();
+    public List<Student> SearchStuData();
 }
