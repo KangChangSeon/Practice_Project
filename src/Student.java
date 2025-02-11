@@ -25,6 +25,7 @@ public class Student {
     private int cnt;
     static Scanner sc = new Scanner(System.in);
 
+
     private Student(StudentBuilder studentBuilder) {
         this.sno = studentBuilder.sno;
         this.name = studentBuilder.name;

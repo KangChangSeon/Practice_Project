@@ -4,7 +4,7 @@ public class Main {
         StudentManager.getinstance().saveStudntData();
         StudentManager.getinstance().inputstuData();
         StudentManager.getinstance().saveStudntData();
-        System.out.println(StudentManager.getStudentList().toString());
+        System.out.println(StudentManager.getinstance().studentList.toString());
 
 
 
