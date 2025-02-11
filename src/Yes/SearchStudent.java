@@ -1,4 +1,5 @@
 package Yes;
 
-public interface SearchStudent {
+public interface SearchStudent extends StudentOutput{
+    public String[] SearchStuData();
 }

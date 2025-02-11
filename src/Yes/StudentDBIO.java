@@ -1,4 +1,5 @@
 package Yes;
 
-public class StudentDBIO {
+public abstract class StudentDBIO implements StudentIO {
+
 }

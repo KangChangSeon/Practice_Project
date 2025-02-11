@@ -1,4 +1,5 @@
 package Yes;
 
-public class StudentInput {
+public interface StudentInput {
+    public String InputStuData();
 }
