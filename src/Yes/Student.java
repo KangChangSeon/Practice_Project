@@ -1,5 +1,8 @@
 package Yes;
 
+import lombok.Data;
+
+@Data
 public class Student {
     private final String sno;
     private final String name;
