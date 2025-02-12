@@ -66,13 +66,9 @@ public class StudentFileIO extends StudentDBIO{
         return List.of();
     }
 
-    @Override
-    public List<Student> sortStuByIdAsce() {
-        return List.of();
-    }
 
     @Override
-    public List<Student> sortStuByIdDesc() {
+    public List<Student> sortStuById() {
         return List.of();
     }
 
@@ -82,12 +78,16 @@ public class StudentFileIO extends StudentDBIO{
     }
 
     @Override
-    public List<Student> SortStuByGradeDesc() {
+    public List<Student> sortStuByGrade() {
+        return List.of();
+    }
+    @Override
+    public List<Student> sortStuByName() {
         return List.of();
     }
 
     @Override
-    public List<Student> SortStuByScoreDesc() {
+    public List<Student> sortStuByScore() {
         return List.of();
     }
 
@@ -106,7 +106,7 @@ public class StudentFileIO extends StudentDBIO{
     }
 
     @Override
-    public List<Student> printAllStudent(List<Student> students) {
+    public List<Student> printAllStudent() {
         return   List.of();
     }
 }
