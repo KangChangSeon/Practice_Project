@@ -53,5 +53,27 @@
     "total": 263,
     "average": 65.75,
     "grade": "D"
+  },
+  {
+    "sno": "109",
+    "name": "강감찬",
+    "korean": 100,
+    "english": 100,
+    "math": 100,
+    "science": 100,
+    "total": 400,
+    "average": 100.0,
+    "grade": "A"
+  },
+  {
+    "sno": "106",
+    "name": "107",
+    "korean": 20,
+    "english": 40,
+    "math": 50,
+    "science": 60,
+    "total": 170,
+    "average": 42.5,
+    "grade": "F"
   }
 ]
