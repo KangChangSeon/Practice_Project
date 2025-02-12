@@ -61,9 +61,9 @@ public class StudentManager extends StudentDBIO {
             StudentFileIO fileIO = new StudentFileIO();
             List<Student> fileStudents = fileIO.getStuData();
 
-            boolean duplicateFound = fileStudents.stream().anyMatch(s -> s.getSno().equals(sno))
+            boolean check = fileStudents.stream().anyMatch(s -> s.getSno().equals(sno))
                     || studentDataList.stream().anyMatch(s -> s.getSno().equals(sno));
-            if (duplicateFound) {
+            if (check) {
                 System.out.println("이미 존재하는 학번입니다. 다시 입력해주세요.");
             } else {
                 return sno;
@@ -78,7 +78,7 @@ public class StudentManager extends StudentDBIO {
             try {
                 score = Integer.parseInt(sc.nextLine());
                 if (score < 0 || score > 100) {
-                    System.out.println("점수는 0과 100 사이의 정수여야 합니다. 다시 입력하세요.");
+                    System.out.println("점수는 0 ~ 100 사이의 정수여야 합니다.");
                     continue;
                 }
                 break;
