@@ -1,7 +1,7 @@
 import java.util.List;
 
 public interface StudentOutput {
-    List<String> printStudentDta(Student student);
-    String printStudentbyName(Student name);
-    String printAllStudent(List<Student> students);
+    List<Student>printStudentDta(List<Student> searchFoundStudents);
+    List<Student>  printStudentbyName(List<Student> searchFoundStudents);
+    List<Student> printAllStudent(List<Student> students);
 }

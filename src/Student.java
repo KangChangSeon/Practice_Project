@@ -1,9 +1,7 @@
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Scanner;
-@Getter
-@Setter
+@Data
 public class Student {
     //필수멤버
     private String sno;
@@ -27,7 +25,7 @@ public class Student {
     private int cnt;
     static Scanner sc = new Scanner(System.in);
 
-
+    public Student(){}
     private Student(StudentBuilder studentBuilder) {
         this.sno = studentBuilder.sno;
         this.name = studentBuilder.name;
@@ -39,16 +37,16 @@ public class Student {
         this.total = korean + english + math + science;
         this.average = (double) total / cnt;
         switch ((int)average/10){
-            case 10 | 9:
+            case 10:
                     grade = 'A';
                     break;
-                case 8:
+                case 9:
                     grade = 'B';
                     break;
-                case 7:
+                case 8:
                     grade = 'C';
                     break;
-                case 6:
+                case 7:
                     grade = 'D';
                     break;
                 default:
@@ -157,5 +155,6 @@ public class Student {
         result += ", 총합점수 :"+total + ", 평균점수" + average+", 등급 : "+grade;
         return result;
     }
+
 
 }

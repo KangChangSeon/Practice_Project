@@ -1,10 +1,10 @@
 import java.util.List;
 
 public interface SortedStudent {
-    List<String> sortStuByIdAsce();
-    List<String> sortStuByIdDesc();
-    List<String> sortStuByAverage();
-    List<String> SortStuByGradeDesc();
-    List<String> SortStuByScoreDesc();
+    List<Student> sortStuByIdAsce();
+    List<Student> sortStuByIdDesc();
+    List<Student> sortStuByAverage();
+    List<Student> SortStuByGradeDesc();
+    List<Student> SortStuByScoreDesc();
 
 }
