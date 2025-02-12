@@ -1,19 +1,22 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
 
 public class StudentFileIO extends StudentDBIO{
 
     private String filePath ;//파일 제목
 
-    public StudentFileIO(){}
 
-    public StudentFileIO(String filePath) {
-        this.filePath = filePath;
-        saveStudentInfo();
+    public StudentFileIO() {
+        this.filePath = StudentDBIO.getInstance().getFilePath();
     }
-
+    public StudentFileIO(String filePath){
+        this.filePath = filePath;
+    }
+    public String getFilePath() {
+        return filePath;
+    }
     //리스트를 파일에 저장
     public void saveStudentInfo(){
         List<String> studentList = StudentManager.getinstance().studentList; // 매니저 통해 리스트 불러옴
@@ -39,7 +42,6 @@ public class StudentFileIO extends StudentDBIO{
             String line;
             while ((line = reader.readLine()) != null) {
                 loadinfoList.add(line); // 한 줄 그대로 리스트에 추가
-                System.out.println(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,7 +54,7 @@ public class StudentFileIO extends StudentDBIO{
 
 
     @Override
-    public List<String> saveStudntData() {
+    public List<String> saveStudntData(Student student) {
         return List.of();
     }
 
@@ -92,8 +94,7 @@ public class StudentFileIO extends StudentDBIO{
     }
 
     @Override
-    public Student inputstuData() {
-        return null;
+    public void inputstuData() {
     }
 
     @Override

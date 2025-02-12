@@ -1,7 +1,9 @@
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Scanner;
-@Data
+@Getter
+@Setter
 public class Student {
     //필수멤버
     private String sno;
@@ -53,7 +55,7 @@ public class Student {
                     grade = 'F';
                     break;
             }
-        System.out.println("입력된 정보 : "+ toString()+"를 저장했습니다.");
+        System.out.println("입력된 정보 : "+ toString());
     }
 
     public static class StudentBuilder {
