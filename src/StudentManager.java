@@ -8,9 +8,7 @@ public class StudentManager extends StudentDBIO {
     private static StudentManager instance;
     private Student student;
     private List<String> studentList;
-    private String keyword;
-    private List<Student> loadStudentList = new ArrayList<>(); //학생객체를 담을 리스트
-
+//    private String keyword;
     public static StudentManager getinstance() {
         if (instance == null) {
             instance = new StudentManager();
@@ -40,6 +38,7 @@ public class StudentManager extends StudentDBIO {
     @Override
     public List<Student> getStudntData() {
 
+        List<Student> loadStudentList = new ArrayList<>();
         StudentFileIO studentFileIO = new StudentFileIO();
 
         for (String info : studentFileIO.loadStudentInfo()) { //for each믄 : 로드한 데이터를 쉼표기준으로 분리
@@ -65,7 +64,9 @@ public class StudentManager extends StudentDBIO {
     }
 
     @Override
-    public List<Student> searchStudnt() { //Keyword 멤버변수로 변경 //리스트 Studnet타입으로 변경
+    public List<Student> searchStudnt() {
+        String keyword;
+        List<Student> loadStudentList = new ArrayList<>();//Keyword 멤버변수로 변경 //리스트 Studnet타입으로 변경
         loadStudentList = getStudntData();
         boolean search = false;
 
@@ -95,6 +96,8 @@ public class StudentManager extends StudentDBIO {
 
     @Override
     public List<Student> sortStuByName() { Scanner sc = new Scanner(System.in);
+
+        List<Student> loadStudentList = new ArrayList<>();
         loadStudentList = getStudntData();
         System.out.println("정렬 방식을 선택해주세요.");
         System.out.println("1. 오름차순 2.내림차순");
@@ -105,8 +108,9 @@ public class StudentManager extends StudentDBIO {
         switch (num){
             case 1://Comparator 학생 아이디 오름차순
                 Collections.sort(loadStudentList,Comparator.comparing(Student::getName));//람다 studnet->student.getSno
-                System.out.println(loadStudentList);
-
+                for(Student sortStudent : loadStudentList)
+                    System.out.println(sortStudent);
+                break;
             case 2 :  //Collections.sort 오버로딩 내림차순
                 Collections.sort(loadStudentList, new Comparator<Student>() {
                     @Override
@@ -114,7 +118,10 @@ public class StudentManager extends StudentDBIO {
                         return o2.getName().compareTo(o1.getName()); // 문자열 정렬 방식
                     }
                 });
-                System.out.println(loadStudentList);
+                for(Student sortStudent : loadStudentList)
+                System.out.println(sortStudent);
+                break;
+
             default:
                 System.out.println("잘못입력하셨습니다.");
                 break;
@@ -126,6 +133,8 @@ public class StudentManager extends StudentDBIO {
 
     @Override
     public List<Student> sortStuById() {
+
+        List<Student> loadStudentList = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
         loadStudentList = getStudntData();
         System.out.println("정렬 방식을 선택해주세요.");
@@ -139,6 +148,7 @@ public class StudentManager extends StudentDBIO {
                 Collections.sort(loadStudentList,Comparator.comparing(Student::getSno));//람다 studnet->student.getSno
                 for(Student sortStudent : loadStudentList)
                     System.out.println(sortStudent);
+                break;
 
             case 2 :  //Collections.sort 오버로딩 내림차순
                 Collections.sort(loadStudentList, new Comparator<Student>() {
@@ -149,6 +159,7 @@ public class StudentManager extends StudentDBIO {
                 });
                 for(Student sortStudent : loadStudentList)
                     System.out.println(sortStudent);
+                break;
             default:
                 System.out.println("잘못입력하셨습니다.");
                 break;
@@ -159,7 +170,9 @@ public class StudentManager extends StudentDBIO {
 
 
     @Override
-    public List<Student> sortStuByAverage() { //Comparator 평균점수 오름차순
+    public List<Student> sortStuByAverage() {
+
+        List<Student> loadStudentList = new ArrayList<>();//Comparator 평균점수 오름차순
         Scanner sc = new Scanner(System.in);
         loadStudentList = getStudntData();
 
@@ -183,7 +196,9 @@ public class StudentManager extends StudentDBIO {
     }
 
     @Override
-    public List<Student> sortStuByGrade() {//Collection.sort() 오버라이딩 등급 내림차순
+    public List<Student> sortStuByGrade() {
+
+        List<Student> loadStudentList = new ArrayList<>();//Collection.sort() 오버라이딩 등급 내림차순
         Scanner sc = new Scanner(System.in);
         loadStudentList = getStudntData();
 
@@ -217,6 +232,8 @@ public class StudentManager extends StudentDBIO {
 
     @Override
     public List<Student> sortStuByScore() {//과목별점수 오름차순/ 내림차순
+
+        List<Student> loadStudentList = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
         loadStudentList = getStudntData();
 
@@ -235,12 +252,17 @@ public class StudentManager extends StudentDBIO {
                 switch (num2) {
                     case 1:
                         Collections.sort(loadStudentList, Comparator.comparing(Student::getKorean));
+                        for(Student sortStudent : loadStudentList)
+                            System.out.println(sortStudent);
                         break;
                     case 2:
                         Collections.sort(loadStudentList, Comparator.comparing(Student::getKorean).reversed());
+                        for(Student sortStudent : loadStudentList)
+                            System.out.println(sortStudent);
                         break;
                     default:
                         System.out.println("잘못 입력하셨습니다.");
+                        break;
                 }
                 break;
 
@@ -248,12 +270,19 @@ public class StudentManager extends StudentDBIO {
                 switch (num2) {
                     case 1:
                         Collections.sort(loadStudentList, Comparator.comparing(Student::getEnglish));
+                        for(Student sortStudent : loadStudentList)
+                            System.out.println(sortStudent);
                         break;
                     case 2:
                         Collections.sort(loadStudentList, Comparator.comparing(Student::getEnglish).reversed());
+                        for(Student sortStudent : loadStudentList)
+                            System.out.println(sortStudent);
                         break;
                     default:
                         System.out.println("잘못 입력하셨습니다.");
+                        for(Student sortStudent : loadStudentList)
+                        System.out.println(sortStudent);
+                    break;
                 }
                 break;
 
@@ -261,9 +290,13 @@ public class StudentManager extends StudentDBIO {
                 switch (num2) {
                     case 1:
                         Collections.sort(loadStudentList, Comparator.comparing(Student::getMath));
+                        for(Student sortStudent : loadStudentList)
+                            System.out.println(sortStudent);
                         break;
                     case 2:
                         Collections.sort(loadStudentList, Comparator.comparing(Student::getMath).reversed());
+                        for(Student sortStudent : loadStudentList)
+                            System.out.println(sortStudent);
                         break;
                     default:
                         System.out.println("잘못 입력하셨습니다.");
@@ -274,12 +307,17 @@ public class StudentManager extends StudentDBIO {
                 switch (num2) {
                     case 1:
                         Collections.sort(loadStudentList, Comparator.comparing(Student::getScience));
+                        for(Student sortStudent : loadStudentList)
+                            System.out.println(sortStudent);
                         break;
                     case 2:
                         Collections.sort(loadStudentList, Comparator.comparing(Student::getScience).reversed());
+                        for(Student sortStudent : loadStudentList)
+                            System.out.println(sortStudent);
                         break;
                     default:
                         System.out.println("잘못 입력하셨습니다.");
+                        break;
                  }
                 break;
 
@@ -315,6 +353,8 @@ public class StudentManager extends StudentDBIO {
 
     @Override
     public List<Student> printAllStudent() {
+
+        List<Student> loadStudentList = new ArrayList<>();
         loadStudentList = getStudntData();
         for(Student printstudent : loadStudentList)
             System.out.println(printstudent);
