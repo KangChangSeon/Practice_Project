@@ -14,22 +14,23 @@ public class Main {
             System.out.println("*".repeat(40));
             int num1 = sc.nextInt();
             switch (num1) {
-                case 1:
+                case 1: //입력
                     StudentManager.getinstance().inputstuData();
                     break;
-                case 2:
+                case 2: //출력
                     StudentManager.getinstance().printAllStudent();
                     break;
-                case 3:
+                case 3: //검색
                     StudentManager.getinstance().searchStudnt();
                     break;
-                case 4:
+                case 4: //정렬
                     boolean searchEnd = true;
                     while (searchEnd) {
                         System.out.println("정렬할 기준을 선택해주세요. ");
                         System.out.println("1.학번 2. 이름 3.과목별점수 4.평균점수 5.등급");
                         int num2 = sc.nextInt();
                         sc.nextLine();
+
                         switch (num2) {
                             case 1:
                                 StudentManager.getinstance().sortStuById();
@@ -53,6 +54,7 @@ public class Main {
                                 break;
                             default:
                                 System.out.println("잘못 누르셨습니다. 다시 선택해주세요.");
+                                break;
                         }
                     }
                     break;

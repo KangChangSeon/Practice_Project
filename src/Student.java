@@ -36,7 +36,7 @@ public class Student {
         this.cnt = studentBuilder.cnt;
         this.total = korean + english + math + science;
         this.average = (double) total / cnt;
-        switch ((int)average/10){
+        switch ((int)total/10*cnt){
             case 10:
                     grade = 'A';
                     break;
@@ -77,8 +77,9 @@ public class Student {
         boolean builderin = true;
 
         public StudentBuilder() {
-            System.out.println("학번을 입력해주세요.");
-            this.sno = sc.nextLine();
+
+                System.out.println("학번을 입력해주세요.");
+                this.sno = sc.nextLine();
             System.out.println("이름을 입력해주세요.");
             this.name = sc.nextLine();
 
@@ -87,6 +88,7 @@ public class Student {
                 System.out.println("1. 국어 2.영어 3.수학 4.과학 5. 종료");
                 int switchNum = sc.nextInt();
                 sc.nextLine();
+
 
                 switch(switchNum) {
                     case 1:

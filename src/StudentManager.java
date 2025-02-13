@@ -8,7 +8,10 @@ public class StudentManager extends StudentDBIO {
     private static StudentManager instance;
     private Student student;
     private List<String> studentList;
-//    private String keyword;
+    private final List<Student> studentDBList = getStudntData();
+
+    Scanner sc = new Scanner(System.in);
+
     public static StudentManager getinstance() {
         if (instance == null) {
             instance = new StudentManager();
@@ -64,41 +67,41 @@ public class StudentManager extends StudentDBIO {
     }
 
     @Override
-    public List<Student> searchStudnt() {
+    public List<Student> searchStudnt() {//Keyword 멤버변수로 변경 //리스트 Studnet타입으로 변경
         String keyword;
-        List<Student> loadStudentList = new ArrayList<>();//Keyword 멤버변수로 변경 //리스트 Studnet타입으로 변경
-        loadStudentList = getStudntData();
+
         boolean search = false;
 
         List<Student> searchFoundStudents = new ArrayList<>();
-        Scanner sc = new Scanner(System.in);
 
         System.out.println("검색할 학번 또는 이름을 입력해주세요.");
         keyword = sc.nextLine();
         System.out.println(keyword + "를 검색합니다.");
 
-        for (Student searchStudent : loadStudentList) {
+        for (Student searchStudent : studentDBList) {
             if (searchStudent.getSno().equals(keyword) || searchStudent.getName().equals(keyword)) {
                 searchFoundStudents.add(searchStudent);
                 search = true;
             }
         }
-        if (!search) System.out.println(keyword + "에 해당하는 학생이 존재하지 않습니다.");
-        System.out.println("1.해당하는 학생의 이름만 조회 2.해당하는 학생의 모든 정보 조회");
-        int num = sc.nextInt();
-        sc.nextLine();
-        if(num==1) printStudentbyName(searchFoundStudents);
-        else if (num==2) printStudentDta(searchFoundStudents);
-        else System.out.println("잘못입력하셨습니다.");
+        if (!search) {
+            System.out.println(keyword + "에 해당하는 학생이 존재하지 않습니다.");
+        }else if(search) {
+            System.out.println("1.해당하는 학생의 이름만 조회 2.해당하는 학생의 모든 정보 조회");
+            int num = sc.nextInt();
+            sc.nextLine();
+            if (num == 1) printStudentbyName(searchFoundStudents);
+            else if (num == 2) printStudentDta(searchFoundStudents);
+            else System.out.println("잘못입력하셨습니다.");
+        }
 
         return searchFoundStudents;
     }
 
     @Override
-    public List<Student> sortStuByName() { Scanner sc = new Scanner(System.in);
+    public List<Student> sortStuByName() {
 
-        List<Student> loadStudentList = new ArrayList<>();
-        loadStudentList = getStudntData();
+
         System.out.println("정렬 방식을 선택해주세요.");
         System.out.println("1. 오름차순 2.내림차순");
         int num = sc.nextInt();
@@ -107,18 +110,20 @@ public class StudentManager extends StudentDBIO {
 
         switch (num){
             case 1://Comparator 학생 아이디 오름차순
-                Collections.sort(loadStudentList,Comparator.comparing(Student::getName));//람다 studnet->student.getSno
-                for(Student sortStudent : loadStudentList)
+                Collections.sort(studentDBList,Comparator.comparing(Student::getName));//람다 studnet->student.getSno
+                for(Student sortStudent : studentDBList)
+                    if(sortStudent.getName()==null)
                     System.out.println(sortStudent);
                 break;
             case 2 :  //Collections.sort 오버로딩 내림차순
-                Collections.sort(loadStudentList, new Comparator<Student>() {
+                Collections.sort(studentDBList, new Comparator<Student>() {
                     @Override
                     public int compare(Student o1, Student o2) {
                         return o2.getName().compareTo(o1.getName()); // 문자열 정렬 방식
                     }
                 });
-                for(Student sortStudent : loadStudentList)
+                for(Student sortStudent : studentDBList)
+                    if(sortStudent.getName()==null)
                 System.out.println(sortStudent);
                 break;
 
@@ -127,16 +132,14 @@ public class StudentManager extends StudentDBIO {
                 break;
 
         }
-        return loadStudentList;
+        return studentDBList;
 
     }
 
     @Override
     public List<Student> sortStuById() {
 
-        List<Student> loadStudentList = new ArrayList<>();
-        Scanner sc = new Scanner(System.in);
-        loadStudentList = getStudntData();
+
         System.out.println("정렬 방식을 선택해주세요.");
         System.out.println("1. 오름차순 2.내림차순");
         int num = sc.nextInt();
@@ -145,36 +148,34 @@ public class StudentManager extends StudentDBIO {
 
         switch (num){
             case 1://Comparator 학생 아이디 오름차순
-                Collections.sort(loadStudentList,Comparator.comparing(Student::getSno));//람다 studnet->student.getSno
-                for(Student sortStudent : loadStudentList)
+                Collections.sort(studentDBList,Comparator.comparing(Student::getSno));//람다 studnet->student.getSno
+                for(Student sortStudent : studentDBList)
+                    if(sortStudent.getSno()==null)
                     System.out.println(sortStudent);
                 break;
 
             case 2 :  //Collections.sort 오버로딩 내림차순
-                Collections.sort(loadStudentList, new Comparator<Student>() {
+                Collections.sort(studentDBList, new Comparator<Student>() {
                 @Override
                 public int compare(Student o1, Student o2) {
                     return o2.getSno().compareTo(o1.getSno()); // 문자열 정렬 방식
                 }
                 });
-                for(Student sortStudent : loadStudentList)
+                for(Student sortStudent :studentDBList)
+                    if(sortStudent.getSno()==null)
                     System.out.println(sortStudent);
                 break;
             default:
                 System.out.println("잘못입력하셨습니다.");
                 break;
-
         }
-        return loadStudentList;
+        return studentDBList;
     }
 
 
     @Override
     public List<Student> sortStuByAverage() {
 
-        List<Student> loadStudentList = new ArrayList<>();//Comparator 평균점수 오름차순
-        Scanner sc = new Scanner(System.in);
-        loadStudentList = getStudntData();
 
         System.out.println("정렬 방식을 선택해주세요.");
         System.out.println("1. 오름차순 2.내림차순");
@@ -183,24 +184,22 @@ public class StudentManager extends StudentDBIO {
         sc.nextLine();;
 
         if(num2 == 1) {
-            Collections.sort(loadStudentList, Comparator.comparing(Student::getAverage));
-            for(Student sortStudent : loadStudentList)
+            Collections.sort(studentDBList, Comparator.comparing(Student::getAverage));
+            for(Student sortStudent : studentDBList)
                 System.out.println(sortStudent);
         } else if (num2 ==2){
-            Collections.sort(loadStudentList, Comparator.comparing(Student::getAverage).reversed());
-            for(Student sortStudent : loadStudentList)
+            Collections.sort(studentDBList, Comparator.comparing(Student::getAverage).reversed());
+            for(Student sortStudent : studentDBList)
                 System.out.println(sortStudent);
         }else System.out.println("잘못입력하셨습니다.");
 
-        return loadStudentList;
+        return studentDBList;
     }
 
     @Override
-    public List<Student> sortStuByGrade() {
-
-        List<Student> loadStudentList = new ArrayList<>();//Collection.sort() 오버라이딩 등급 내림차순
+    public List<Student> sortStuByGrade() {//Collection.sort() 오버라이딩 등급 내림차순
         Scanner sc = new Scanner(System.in);
-        loadStudentList = getStudntData();
+
 
         System.out.println("정렬 방식을 선택해주세요.");
         System.out.println("1. 오름차순 2.내림차순");
@@ -209,33 +208,35 @@ public class StudentManager extends StudentDBIO {
         sc.nextLine();;
 
         if (num2==1) {
-            Collections.sort(loadStudentList, new Comparator<Student>() {
+            Collections.sort(studentDBList, new Comparator<Student>() {
                 @Override
                 public int compare(Student o1, Student o2) {
                     return Character.compare(o1.getGrade(), o2.getGrade());
                 }
             });
-            for(Student sortStudent : loadStudentList)
+            for(Student sortStudent : studentDBList)
+                if(sortStudent.getGrade()!= 0)
                 System.out.println(sortStudent);
         } else if (num2==2) {
-            Collections.sort(loadStudentList, new Comparator<Student>() {
+            Collections.sort(studentDBList, new Comparator<Student>() {
                 @Override
                 public int compare(Student o1, Student o2) {
                     return Character.compare(o2.getGrade(), o1.getGrade());
                 }
             });
-            for(Student sortStudent : loadStudentList)
+            for(Student sortStudent : studentDBList)
+                if(sortStudent.getGrade()!= 0)
                 System.out.println(sortStudent);
         }else System.out.println("잘못입력하셨습니다.");
-        return loadStudentList;
+        return studentDBList;
     }
 
     @Override
     public List<Student> sortStuByScore() {//과목별점수 오름차순/ 내림차순
 
-        List<Student> loadStudentList = new ArrayList<>();
+
         Scanner sc = new Scanner(System.in);
-        loadStudentList = getStudntData();
+
 
         System.out.println("정렬할 과목을 선택해 주세요");
         System.out.println("1.국어 2.영어 3. 수학 4.과학 ");
@@ -251,13 +252,15 @@ public class StudentManager extends StudentDBIO {
             case 1: // 국어 정렬
                 switch (num2) {
                     case 1:
-                        Collections.sort(loadStudentList, Comparator.comparing(Student::getKorean));
-                        for(Student sortStudent : loadStudentList)
+                        Collections.sort(studentDBList, Comparator.comparing(Student::getKorean));
+                        for(Student sortStudent : studentDBList)
+                            if(sortStudent.getKorean()!=0) // 해당 과목 점수를 입력하지 않은 경우 출력하지 않음
                             System.out.println(sortStudent);
                         break;
                     case 2:
-                        Collections.sort(loadStudentList, Comparator.comparing(Student::getKorean).reversed());
-                        for(Student sortStudent : loadStudentList)
+                        Collections.sort(studentDBList, Comparator.comparing(Student::getKorean).reversed());
+                        for(Student sortStudent : studentDBList)
+                            if(sortStudent.getKorean()!=0)
                             System.out.println(sortStudent);
                         break;
                     default:
@@ -269,18 +272,20 @@ public class StudentManager extends StudentDBIO {
             case 2: // 영어 정렬
                 switch (num2) {
                     case 1:
-                        Collections.sort(loadStudentList, Comparator.comparing(Student::getEnglish));
-                        for(Student sortStudent : loadStudentList)
+                        Collections.sort(studentDBList, Comparator.comparing(Student::getEnglish));
+                        for(Student sortStudent : studentDBList)
+                            if(sortStudent.getEnglish()!=0)
                             System.out.println(sortStudent);
                         break;
                     case 2:
-                        Collections.sort(loadStudentList, Comparator.comparing(Student::getEnglish).reversed());
-                        for(Student sortStudent : loadStudentList)
+                        Collections.sort(studentDBList, Comparator.comparing(Student::getEnglish).reversed());
+                        for(Student sortStudent : studentDBList)
+                            if(sortStudent.getEnglish()!=0)
                             System.out.println(sortStudent);
                         break;
                     default:
                         System.out.println("잘못 입력하셨습니다.");
-                        for(Student sortStudent : loadStudentList)
+                        for(Student sortStudent : studentDBList)
                         System.out.println(sortStudent);
                     break;
                 }
@@ -289,13 +294,15 @@ public class StudentManager extends StudentDBIO {
             case 3: // 수학 정렬
                 switch (num2) {
                     case 1:
-                        Collections.sort(loadStudentList, Comparator.comparing(Student::getMath));
-                        for(Student sortStudent : loadStudentList)
+                        Collections.sort(studentDBList, Comparator.comparing(Student::getMath));
+                        for(Student sortStudent : studentDBList)
+                            if(sortStudent.getMath()!=0)
                             System.out.println(sortStudent);
                         break;
                     case 2:
-                        Collections.sort(loadStudentList, Comparator.comparing(Student::getMath).reversed());
-                        for(Student sortStudent : loadStudentList)
+                        Collections.sort(studentDBList, Comparator.comparing(Student::getMath).reversed());
+                        for(Student sortStudent : studentDBList)
+                            if(sortStudent.getMath()!=0)
                             System.out.println(sortStudent);
                         break;
                     default:
@@ -306,13 +313,15 @@ public class StudentManager extends StudentDBIO {
             case 4: // 과학 정렬
                 switch (num2) {
                     case 1:
-                        Collections.sort(loadStudentList, Comparator.comparing(Student::getScience));
-                        for(Student sortStudent : loadStudentList)
+                        Collections.sort(studentDBList, Comparator.comparing(Student::getScience));
+                        for(Student sortStudent : studentDBList)
+                            if(sortStudent.getScience()!=0)
                             System.out.println(sortStudent);
                         break;
                     case 2:
-                        Collections.sort(loadStudentList, Comparator.comparing(Student::getScience).reversed());
-                        for(Student sortStudent : loadStudentList)
+                        Collections.sort(studentDBList, Comparator.comparing(Student::getScience).reversed());
+                        for(Student sortStudent : studentDBList)
+                            if(sortStudent.getScience()!=0)
                             System.out.println(sortStudent);
                         break;
                     default:
@@ -326,7 +335,7 @@ public class StudentManager extends StudentDBIO {
         }
 
 
-        return loadStudentList;
+        return studentDBList;
     }
 
     @Override
@@ -353,12 +362,9 @@ public class StudentManager extends StudentDBIO {
 
     @Override
     public List<Student> printAllStudent() {
-
-        List<Student> loadStudentList = new ArrayList<>();
-        loadStudentList = getStudntData();
-        for(Student printstudent : loadStudentList)
+        for(Student printstudent : studentDBList)
             System.out.println(printstudent);
-        return loadStudentList;
+        return studentDBList;
     }
 
     //데이터 로드시 생성할 생성자로 사용
