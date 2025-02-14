@@ -1,4 +1,6 @@
-package smallproject0206.code;
+package Test;
+
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,10 +11,20 @@ import java.util.stream.Collectors;
 
 public class StudentManager extends StudentDBIO {
 
+    @Getter
+    static List<Student> students = new ArrayList<>();
+
+    StudentFileIO studentFileIO = new StudentFileIO();
+
     Scanner scanner = new Scanner(System.in);
 
     private static final Pattern SNO_PATTERN = Pattern.compile("^\\d{6}$");  // 학번은 6자리 숫자
     private static final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Z가-힣]+$"); // 한글 및 영문 허용
+
+    // 생성자에서 파일의 데이터를 미리 불러옵니다.
+    public StudentManager() {
+        studentFileIO.loadStudentInfo();
+    }
 
     public void run() {
         System.out.println("1. add student info");
@@ -22,19 +34,20 @@ public class StudentManager extends StudentDBIO {
         System.out.println("5. exit");
         System.out.println("choice menu");
 
-        int menu = -1; // 기본값 설정
+        int menu = 0; // 기본값 설정
         try {
-            String input = scanner.nextLine().trim(); // 입력받기
-            menu = Integer.parseInt(input); // 숫자로 변환
+            menu = scanner.nextInt();
+            scanner.nextLine();
         } catch (NumberFormatException e) {
             System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
         }
-        scanner.nextLine();  // 개행 문자 처리
         switch (menu) {
             case 1:
                 inputStudent();
+                studentFileIO.saveStudentInfo();
                 break;
             case 2:
+                // 파일에서 이미 데이터를 불러왔으므로 바로 출력합니다.
                 outputStudent();
                 break;
             case 3:
@@ -57,7 +70,7 @@ public class StudentManager extends StudentDBIO {
         String sno;
         do {
             System.out.print("sno (6자리수): ");
-            sno = scanner.next();
+            sno = scanner.nextLine();
             if (!SNO_PATTERN.matcher(sno).matches()) {
                 System.out.println("정확히 6자리 수 재입력");
             }
@@ -117,7 +130,7 @@ public class StudentManager extends StudentDBIO {
                 .collect(Collectors.toList());
 
         if (foundStudents.isEmpty()) {
-            System.out.println("no" + searchName);
+            System.out.println("no " + searchName);
         } else {
             System.out.println("result");
             for (Student student : foundStudents) {

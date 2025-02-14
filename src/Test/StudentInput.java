@@ -1,4 +1,4 @@
-package smallproject0206.code;
+package Test;
 
 public interface StudentInput {
 

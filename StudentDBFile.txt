@@ -1,0 +1,2 @@
+sno='123456', name='강감찬', subjects=[korean:50, english:70, math:60, science:80], total=260, average=65.0, grade=D
+sno='093840', name='강이식', subjects=[korean:40, english:50, math:20, science:30], total=140, average=35.0, grade=F
