@@ -1,34 +1,42 @@
 package Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static Test.StudentManager.students;
-
+/**
+ * 파일 입출력을 통해 학생 정보를 저장하고 불러오는 기능을 제공하는 클래스입니다.
+ * {@link StudentDBIO}를 상속받습니다.
+ */
 public class StudentFileIO extends StudentDBIO {
     private String filePath = "StudentDBFile.txt";
 
+    /**
+     * 학생 정보를 파일에 저장합니다.
+     */
     public void saveStudentInfo() {
         try {
-            // 파일에 데이터를 추가하기 위해 true 사용 (false이면 덮어쓰기)
             BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true));
-            for (Student student : students) {
+            for (Student student : StudentManager.getStudents()) {
                 writer.write(student.toString());
                 writer.newLine();
             }
-            System.out.println("file save successful");
+            System.out.println("파일 저장 성공");
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            System.out.println("file save fail");
+            System.out.println("파일 저장 실패");
             e.printStackTrace();
         }
     }
 
     /**
-     * 파일에 저장된 각 줄(Student.toString() 결과)을 읽어서 Student 객체로 변환 후,
-     * StudentManager의 students 리스트에 추가합니다.
+     * 파일에서 학생 정보를 불러옵니다.
      */
     public void loadStudentInfo() {
         File file = new File(filePath);
@@ -42,7 +50,7 @@ public class StudentFileIO extends StudentDBIO {
             while ((line = reader.readLine()) != null) {
                 Student student = parseStudent(line);
                 if (student != null) {
-                    students.add(student);
+                    StudentManager.getStudents().add(student);
                 }
             }
         } catch (IOException e) {
@@ -52,16 +60,15 @@ public class StudentFileIO extends StudentDBIO {
     }
 
     /**
-     * Student.toString()의 출력 형식(예:
-     * "sno='12345', name='John', subjects=[Math:90, English:80], total=170, average=85.0, grade=B")
-     * 을 기반으로 문자열을 파싱하여 Student 객체를 생성합니다.
+     * 파일에서 읽어들인 문자열 데이터를 파싱하여 {@link Student} 객체를 생성합니다.
+     *
+     * @param data 학생 정보를 담고 있는 문자열
+     * @return 파싱된 Student 객체 (실패 시 null 반환)
      */
     private Student parseStudent(String data) {
         if (data == null || data.isEmpty()) return null;
 
         try {
-            // 정규표현식을 사용해 sno, name, subjects 부분을 추출합니다.
-            // 전체 형식이 변경되면 패턴 수정이 필요합니다.
             Pattern pattern = Pattern.compile("sno='(.*?)', name='(.*?)', subjects=\\[(.*?)\\]");
             Matcher matcher = pattern.matcher(data);
             if (matcher.find()) {
@@ -69,16 +76,13 @@ public class StudentFileIO extends StudentDBIO {
                 String name = matcher.group(2);
                 String subjectsStr = matcher.group(3);
 
-                // StudentBuilder를 이용하여 객체 생성
                 Student.StudentBuilder builder = new Student.StudentBuilder()
                         .sno(sno)
                         .name(name);
 
-                // subjects가 비어있지 않다면, 콤마로 분리하여 각 과목을 추가합니다.
                 if (subjectsStr != null && !subjectsStr.trim().isEmpty()) {
                     String[] subjectEntries = subjectsStr.split(",\\s*");
                     for (String entry : subjectEntries) {
-                        // 각 항목은 "과목명:점수" 형식입니다.
                         String[] parts = entry.split(":");
                         if (parts.length == 2) {
                             String subjectName = parts[0];
