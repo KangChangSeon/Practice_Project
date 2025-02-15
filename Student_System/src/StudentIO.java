@@ -1,2 +1,2 @@
-public interface StudentIO extends StudentInput,SearchStudent,SortStudent{
+public interface StudentIO extends StudentInput,SearchStudent, SortedStudent {
 }
