@@ -1,5 +1,7 @@
 package yes;//import java.util.Scanner;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         boolean run = true;
