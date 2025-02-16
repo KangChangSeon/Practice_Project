@@ -7,7 +7,7 @@ import java.util.List;
 
 public class StudentFileIO extends StudentDBIO {
 
-    private String filePath = ;
+    private String filePath ;
 
 
     public StudentFileIO() {
