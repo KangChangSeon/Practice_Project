@@ -33,12 +33,12 @@ Map<Integer, Runnable> menuChoice : 선택되는 메뉴 번호와 그에 따라 
 [**메소드**]
 void initializeMenu : 
 void exitApp : 프로그램을 강제 종료한다.\
-void startMenuLoo : 사용자가 원하는 기능을 번호로 입력받는 동작을 무한 반복한다. 5번 프로그램 종료가 입력값이되면 프로그램을 종료한다.\
+void startMenuLoop : 사용자가 원하는 기능을 번호로 입력받는 동작을 무한 반복한다. 5번 프로그램 종료가 입력값이되면 프로그램을 종료한다.\
 void printMenu: 사용자가 선택할 수 있는 메뉴정보를 출력한다.\
 String validateString : 사용자가 입력한 값이 정규표현식 패턴과 일치하는지 검증한다. 검증을 통과하면 입력된 값을 반환한다.\
 int validateInt : 사용자가 입력한 값이 정수인지 검증한다. 검증을 통과하면 입력된 값을 반환한다.\
 
-inputStudent: 
+void inputStudent :  
 ### Student (C)
 
 [**필드**]

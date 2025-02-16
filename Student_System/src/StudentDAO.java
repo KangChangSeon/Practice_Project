@@ -1,23 +1,29 @@
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+// JDVC API 이용해 mysql데베 student 테이블 조작하는 DAO 클래스.
+import java.sql.Connection; // 데베와 연결.
+import java.sql.DriverManager; // JDBC 드라이버 통해 데베 연결 생성하는 클래스.
+import java.sql.PreparedStatement; // sql 쿼리 실행하는 객체. sql 인젝션 방지함.
+import java.sql.ResultSet; // select쿼리의 결과 데이터를 담는 객체.
+import java.util.ArrayList; // 학생 객체를 저장할 리스트를 생성할때 사용.
+import java.util.List; // 어레이 리스트를 다룰 때 사용하는 인터페이스.
 
 public class StudentDAO {
+    // 데베 연결 정보 설정하기.
+    // mysql 데베 주소. 로컬서버, 기본포트 넘버, 사용할할 데베 이름 SMS.
     private static final String URL = "jdbc:mysql://localhost:3306/SMS";
+    // mysql login username
     private static final String USERNAME = "root";
+    // mysql login password
     private static final String PASSWORD = "wjdaudco";
 
+    // 데베 연결.
     private Connection getConnection() throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        Class.forName("com.mysql.cj.jdbc.Driver"); // mysql jdbc 드라이버 로드하기.
+        return DriverManager.getConnection(URL, USERNAME, PASSWORD); // 데베 연결 생성, Connection 객체 반환
     }
 
-    public void save(Student student) {
-        int total = student.getTotal();
+    // 학생 정보 저장하는 메소드. 학생 객체 받기.
+    public void saveToDB(Student student) {
+        int total = student.getTotal(); // total 변수 생성해서 아규먼트 학생개체의 getTotal()메소드 호출하여 반환된 값 할당.
         double average = student.getAverage();
         String grade = student.computeGrade();
         int korean = getSubjectScore(student, "korean");
@@ -25,8 +31,9 @@ public class StudentDAO {
         int math = getSubjectScore(student, "math");
         int science = getSubjectScore(student, "science");
 
+
         try {
-            Connection conn = getConnection();
+            Connection conn = getConnection(); // getConnection() 메소드 호출하여 데베와 연결 생성함.
             PreparedStatement pstmt = conn.prepareStatement(
                     "INSERT INTO STUDENT (sno, name, korean, english, math, science, total, average, grade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             {
@@ -46,6 +53,7 @@ public class StudentDAO {
         }
     }
 
+    // 학번으로 학생 조회하기.
     public Student findStudentBySno(String sno) {
         Student student = null;
         try {
@@ -77,6 +85,7 @@ public class StudentDAO {
         }
         return student;
     }
+
     // DB에서 학번으로 학생정보 삭제
     public void delete(String sno) {
         try {
