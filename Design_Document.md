@@ -43,9 +43,11 @@ int validateInt : 사용자가 입력한 값이 정수인지 검증한다. 검�
 void inputStudent :  입력된 학생정보가 데이터 베이스에 없으면 입력값이 바른 값인지 검증 한 후 데이터 베이스에 저장한다.\
 입력된 학생정보가 데이터베이스에 있으면 데이터베이스에 있는 학생정보를 업데이트 한다. 사용자가 1,2,3 을 입력하느냐에 따라 학생에 대한 정보를 모드 업데이트 하거나, 과목 점수만 업데이트 하거나, 데이터베이스에 저장하는 동작을 완전히 빠져나갈 수 있다. 
 
-private void updateInMemoryStudent : 
+private void updateInMemoryStudent : students 리스트에서 입력된 학번과 같은 학번을 가진 학생 객체가 있다면 삭제한다. 
 
-### Student (C)
+### Student
+[**역할**]\
+학생 객체가 가질 수 있거나 수행할 수 있는 기능을 가지는 클래스이다. 
 
 [**필드**]
 String sno :  학생 학번\

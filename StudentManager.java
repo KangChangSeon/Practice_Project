@@ -17,7 +17,6 @@ public class StudentManager extends StudentDBIO {
     private final Map<Integer, Runnable> menuChoice = new HashMap<>();
 
     // 매니저 객체가 생성되는 순간 자동으로 mainMenu() 메소드가 호출하여 메뉴 선택 맵을 초기화함.
-    /// '초기화'할필요가 있나?
     public StudentManager() {
         initializeMenu();
     }
@@ -105,7 +104,7 @@ public class StudentManager extends StudentDBIO {
         }
     }
 
-    ///  메소드가 너무 큰것같아서 쪼개야 할 것 같음.
+    ///  !메소드가 너무 큰것같아서 쪼개야 할 것 같음.
     @Override
     public void inputStudent() {
         System.out.println("학생정보를 저장합니다. ");
@@ -140,13 +139,14 @@ public class StudentManager extends StudentDBIO {
             // 학생 개체가 담겨있는 students arraylist에 학생 개체 저장하기.
             students.add(student);
         } else { // sno로 학생 개체를 찾았으면
-            // 호출되는 값으로 데이터 업데이트.
+            // 매개변수값으로 데이터 업데이트.
             System.out.println("already registered student: " + existingStudent.getName()); // getName인데 sno?
             System.out.println("1.edit all info");
             System.out.println("2.edit subject score");
             System.out.println("3.exit add");
 
             String option = scanner.nextLine().trim();
+
             if (("1").equals(option)) {
                 String name = validateString("name (한, 영): ", NAME_PATTERN, "한, 영문으로 재입력");
                 int korean = validateInt("korean: ", 0, 100);
