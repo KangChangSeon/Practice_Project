@@ -55,6 +55,29 @@ String name :  학생 이름\
 List<Subject> subjects : 과목 객체를 담는 리스트
 
 [**메소드**]
+int getTotal : subjects 리스트 안의 과목 개체들의 총 점수를 계산한다. 총점수를 반환한다.\
+double getAverage : subjects 리스트가 비었는지 검사하여 거짓이면 과목개체들의 평균을 계산한다. 평균을 반환한다.
+
+String computeGrade : 학생 개체의 평균 과목 점수의 범위에 대한 등급을 계산한다. 등급을 반환한다.\
+
+[**정적 이너 클래스 Subject**]\
+Student 클래스의 정적 이너 클래스이다. 과목 개체에 대한 정보를 담는다.\
+
+private String name : 과목의 이름.\
+private int score : 과목의 점수.\
+
+[**정적 이너 클래스 StudentBuilder**]\
+학생 개체 생성에 대해 빌더 패턴을 적용하기 위한 클래스이다.\
+이때 이너 클래스의 필드는 private 으로 설정한다. 데이터의 불변성, 유효성, 무결성, 객체의 캡슐화 때문이다.\
+
+private String sno : 학생의 학번\
+private String name : 학생의 이름 \
+private List<Subject> subjects : 학생이 시험을 친 과목들을 담는 리스트. \
+
+*빌더의 메소드들은 외부에서 학생 객체를 생성할 수 있도록 public으로 설정한다.*
+public StudentBuilder sno(String sno) : 빌더의 학번 필드에 학번을 설정하고 빌더 객체를 반환한다.  
+public StudentBuilder  name(String name) : 빌더의 이름 필드에 이름을 설정하고 빌더 객체를 반환한다.  
+public StudentBuilder addSubjects(String subjectName, int score) : 빌더의 subjects ArrayList에 과목 객체를 저장한다. 
 
 ### StudentDAO 
 [**역할**]\
